@@ -1,101 +1,96 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+import { faMessage as faMessageRegular } from "@fortawesome/free-regular-svg-icons";
+import { faMessage as faMessageSolid } from "@fortawesome/free-solid-svg-icons";
+import Footer from "@/components/footer"
+import Link from "next/link";
 import Image from "next/image";
+import StoryView from '@/components/storyView';
+import PostCard from '@/components/post';
+import { debounce } from 'lodash';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [userStoriesData, setUserStoriesData] = useState<any | null>(null);
+  const [storyUserId, setStoryUserId] = useState<string | null>(null);
+  const [userPostsData, setUserPostsData] = useState<any | null>(null);
+  const [postLikes, setPostLikes] = useState<any[] | null>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const fetchData = async () => {
+      const userWithStories = await fetch("http://localhost:3000/api/stories");
+      const data = await userWithStories.json();
+      setUserStoriesData(data);
+
+      const posts = await fetch("http://localhost:3000/api/posts");
+      const postsData = await posts.json();
+      let likes: any = [];
+      postsData.forEach((post: { id: never; }) => {
+        likes[post.id] = postLikes ? postLikes[post.id] : false;
+      });
+      setPostLikes(likes);
+      setUserPostsData(postsData);
+    };
+
+    fetchData();
+  }, []);
+
+
+  const likeHandler = debounce((postId: any, isLiked?: boolean) => {
+    const prevLikes = postLikes ? postLikes[postId] : false;
+    const newPostLikes = postLikes ? [...postLikes] : [];
+    newPostLikes[postId] = isLiked ? isLiked : !newPostLikes[postId];
+    setPostLikes(newPostLikes);
+    const userPosts = userPostsData.map((post: any) => {
+      if (post.id === postId) {
+        post.likes = prevLikes ? (isLiked ? post.likes : post.likes - 1) : post.likes + 1;
+      }
+      return post;
+    });
+    setUserPostsData(userPosts);
+  }, 10);
+
+  return (
+    <div className='md:container'>
+      <header className="fixed top-0 left-[50%] transform translate-x-[-50%] w-screen md:container z-10">
+        <div className="flex justify-between items-center gap-7 px-3 h-20 bg-gray-800 text-white border-b-2 border-gray-700">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-bold">Instabram</span>
+          </div>
+          <div className="flex items-center gap-5">
+            <Link href="/activity" className="relative">
+              <FontAwesomeIcon icon={faHeartRegular} className="text-2xl cursor-pointer" />
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-1">3</span>
+            </Link>
+            <Link href="/messages" className="relative">
+              <FontAwesomeIcon icon={faMessageRegular} className="text-2xl cursor-pointer" />
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-1">2</span>
+            </Link>
+          </div>
         </div>
+      </header>
+
+      <main className="mt-20 mb-40">
+        {storyUserId && <StoryView userId={storyUserId} onClose={() => setStoryUserId(null)} />}
+        <div className="flex items-center h-30 w-full overflow-scroll scrollbar-hidden gap-5 p-3 border-b-2 border-gray-700">
+          {userStoriesData && userStoriesData.map((user: any) => (
+            <div key={user.id} className="flex flex-col items-center gap-1">
+              <button className="bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-1 rounded-full" onClick={() => setStoryUserId(user.id)}>
+                <Image src={user.photo} alt={user.username} width={50} height={50} className="rounded-full" />
+              </button>
+              <span>{user.username}</span>
+            </div>
+          ))}
+        </div>
+        {userPostsData && userPostsData.map((post: any) => (
+          <PostCard key={post.id} post={post} onStoryClick={(userId) => post.user.stories.length > 0 ? setStoryUserId(userId) : null} isLiked={postLikes ? postLikes[post.id] : false} likeHandler={likeHandler} />
+        ))}
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      <Footer />
     </div>
   );
 }

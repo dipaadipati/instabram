@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "image": "https://placehold.co/400x400",
+        "caption": "Hello, world!",
+        "likes": 123,
+        "comments": 144,
+        "created_at": "2025-02-12T00:00:00Z"
+    },
+    {
+        "id": 2,
+        "user_id": 2,
+        "image": "https://placehold.co/400x500",
+        "caption": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "likes": 321,
+        "comments": 321,
+        "created_at": "2025-02-12T00:00:00Z"
+    },
+    {
+        "id": 3,
+        "user_id": 3,
+        "image": "https://placehold.co/500x400",
+        "caption": "Hello, world! #KaburAjaDulu",
+        "likes": 100,
+        "comments": 10,
+        "created_at": "2025-02-12T00:00:00Z"
+    },
+    {
+        "id": 4,
+        "user_id": 4,
+        "image": "https://placehold.co/400x400",
+        "caption": "Hello, world!",
+        "likes": 123,
+        "comments": 144,
+        "created_at": "2025-02-12T00:00:00Z"
+    }
+]

@@ -1,0 +1,188 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "username": "johndoe",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": [
+            {
+                "id": 1,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 2,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Jane Doe",
+        "username": "janedoe",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": [
+            {
+                "id": 1,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 2,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 3,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 4,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 5,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "John Smith",
+        "username": "johnsmith",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": [
+            {
+                "id": 1,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 2,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 3,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 4,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Jane Smith",
+        "username": "janesmith",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": []
+    },
+    {
+        "id": 5,
+        "name": "John Doe",
+        "username": "johndoe",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": [
+            {
+                "id": 1,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 2,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 3,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Jane Doe",
+        "username": "janedoe",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": [
+            {
+                "id": 1,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 2,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 3,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "John Smith",
+        "username": "johnsmith",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": [
+            {
+                "id": 1,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 2,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 3,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Jane Smith",
+        "username": "janesmith",
+        "photo": "https://placehold.co/150",
+        "bio": "Hello, world!",
+        "stories": [
+            {
+                "id": 1,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 2,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            },
+            {
+                "id": 3,
+                "image": "https://placehold.co/400x800",
+                "duration": 3000
+            }
+        ]
+    }
+]
