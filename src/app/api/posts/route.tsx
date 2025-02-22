@@ -5,10 +5,10 @@ interface postType {
 }
 
 export async function GET() {
-    const users = await fetch("./api/users");
+    const users = await fetch(process.env.HOST_URL + "/api/users");
     const usersData = await users.json();
 
-    const posts = await fetch("./posts.json");
+    const posts = await fetch(process.env.HOST_URL + "/posts.json");
     let postsData = await posts.json();
 
     postsData = postsData.map((post: postType) => {
