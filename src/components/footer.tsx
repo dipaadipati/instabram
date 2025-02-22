@@ -20,7 +20,7 @@ export default function Footer() {
 
     return (
         <footer>
-            <div className="fixed bottom-0 left-[50%] transform translate-x-[-50%] w-full md:container">
+            <div className="fixed bottom-0 left-[50%] transform translate-x-[-50%] w-full">
                 <div className="flex justify-center items-center gap-7 h-24 bg-gray-800 text-white">
                     <Hyperlink href="/" icon={faHouse} text="Home" />
                     <Hyperlink href="/search" icon={faMagnifyingGlass} text="Search" />

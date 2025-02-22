@@ -73,13 +73,13 @@ export default function Home() {
   }, 10);
 
   return (
-    <div className='md:container'>
-      <header className="fixed top-0 left-[50%] transform translate-x-[-50%] w-screen md:container z-10">
+    <div className='w-full'>
+      <header className="fixed top-0 left-[50%] transform translate-x-[-50%] w-full z-10">
         <div className="flex justify-between items-center gap-7 px-3 h-20 bg-gray-800 text-white border-b-2 border-gray-700">
           <div className="flex items-center gap-2">
             <span className="text-2xl font-bold">Instabram</span>
           </div>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 mr-5">
             <Link href="/activity" className="relative">
               <FontAwesomeIcon icon={faHeartRegular} className="text-2xl cursor-pointer" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-1">3</span>
@@ -92,21 +92,23 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mt-20 mb-40">
-        {storyUserId && <StoryView userId={storyUserId} onClose={() => setStoryUserId(null)} />}
-        <div className="flex items-center h-30 w-full overflow-scroll scrollbar-hidden gap-5 p-3 border-b-2 border-gray-700">
-          {userStoriesData && userStoriesData.map((user: UserType) => (
-            <div key={user.id} className="flex flex-col items-center gap-1">
-              <button className="bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-1 rounded-full" onClick={() => setStoryUserId(user.id)}>
-                <Image src={user.photo} alt={user.username} width={50} height={50} className="rounded-full" />
-              </button>
-              <span>{user.username}</span>
-            </div>
+      <main className="mt-20 mb-40 flex justify-center items-center">
+        <div className="w-screen md:w-[500px]">
+          {storyUserId && <StoryView userId={storyUserId} onClose={() => setStoryUserId(null)} />}
+          <div className={`flex items-center h-30 w-full overflow-scroll scrollbar-hidden gap-5 p-3 ${userStoriesData && "border-b-2 border-gray-700"}`}>
+            {userStoriesData && userStoriesData.map((user: UserType) => (
+              <div key={user.id} className="flex flex-col items-center gap-1">
+                <button className="bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-1 rounded-full" onClick={() => setStoryUserId(user.id)}>
+                  <Image src={user.photo} alt={user.username} width={50} height={50} className="rounded-full" />
+                </button>
+                <span>{user.username}</span>
+              </div>
+            ))}
+          </div>
+          {userPostsData && userPostsData.map((post: PostType) => (
+            <PostCard key={post.id} post={post} onStoryClick={(userId) => post.user.stories.length > 0 ? setStoryUserId(userId) : null} isLiked={postLikes ? postLikes[post.id] : false} likeHandler={likeHandler} />
           ))}
         </div>
-        {userPostsData && userPostsData.map((post: PostType) => (
-          <PostCard key={post.id} post={post} onStoryClick={(userId) => post.user.stories.length > 0 ? setStoryUserId(userId) : null} isLiked={postLikes ? postLikes[post.id] : false} likeHandler={likeHandler} />
-        ))}
       </main>
 
       <Footer />
