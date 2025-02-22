@@ -11,11 +11,30 @@ import StoryView from '@/components/storyView';
 import PostCard from '@/components/post';
 import { debounce } from 'lodash';
 
+interface UserType {
+  id: number;
+  username: string;
+  photo: string;
+  stories: [];
+}
+
+interface PostType {
+  id: number;
+  user: UserType;
+  user_id: number;
+  image: string;
+  caption: string;
+  likes: number;
+  comments: number;
+  created_at: string;
+  stories: [];
+}
+
 export default function Home() {
-  const [userStoriesData, setUserStoriesData] = useState<any | null>(null);
+  const [userStoriesData, setUserStoriesData] = useState<UserType[] | null>(null);
   const [storyUserId, setStoryUserId] = useState<string | number | null>(null);
-  const [userPostsData, setUserPostsData] = useState<any | null>(null);
-  const [postLikes, setPostLikes] = useState<any[] | null>([]);
+  const [userPostsData, setUserPostsData] = useState<PostType[] | null>(null);
+  const [postLikes, setPostLikes] = useState<boolean[] | null>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +44,7 @@ export default function Home() {
 
       const posts = await fetch("http://localhost:3000/api/posts");
       const postsData = await posts.json();
-      const likes: any = [];
+      const likes: boolean[] = [];
       postsData.forEach((post: { id: never; }) => {
         likes[post.id] = postLikes ? postLikes[post.id] : false;
       });
@@ -34,21 +53,23 @@ export default function Home() {
     };
 
     fetchData();
-  }, []);
+  }, [postLikes]);
 
 
-  const likeHandler = debounce((postId: any, isLiked?: boolean) => {
+  const likeHandler = debounce((postId: number, isLiked?: boolean) => {
     const prevLikes = postLikes ? postLikes[postId] : false;
     const newPostLikes = postLikes ? [...postLikes] : [];
     newPostLikes[postId] = isLiked ? isLiked : !newPostLikes[postId];
     setPostLikes(newPostLikes);
-    const userPosts = userPostsData.map((post: any) => {
-      if (post.id === postId) {
-        post.likes = prevLikes ? (isLiked ? post.likes : post.likes - 1) : post.likes + 1;
-      }
-      return post;
-    });
-    setUserPostsData(userPosts);
+    if (userPostsData) {
+      const userPosts = userPostsData.map((post: PostType) => {
+        if (post.id === postId) {
+          post.likes = prevLikes ? (isLiked ? post.likes : post.likes - 1) : post.likes + 1;
+        }
+        return post;
+      });
+      setUserPostsData(userPosts);
+    }
   }, 10);
 
   return (
@@ -74,7 +95,7 @@ export default function Home() {
       <main className="mt-20 mb-40">
         {storyUserId && <StoryView userId={storyUserId} onClose={() => setStoryUserId(null)} />}
         <div className="flex items-center h-30 w-full overflow-scroll scrollbar-hidden gap-5 p-3 border-b-2 border-gray-700">
-          {userStoriesData && userStoriesData.map((user: any) => (
+          {userStoriesData && userStoriesData.map((user: UserType) => (
             <div key={user.id} className="flex flex-col items-center gap-1">
               <button className="bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-1 rounded-full" onClick={() => setStoryUserId(user.id)}>
                 <Image src={user.photo} alt={user.username} width={50} height={50} className="rounded-full" />
@@ -83,7 +104,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        {userPostsData && userPostsData.map((post: any) => (
+        {userPostsData && userPostsData.map((post: PostType) => (
           <PostCard key={post.id} post={post} onStoryClick={(userId) => post.user.stories.length > 0 ? setStoryUserId(userId) : null} isLiked={postLikes ? postLikes[post.id] : false} likeHandler={likeHandler} />
         ))}
       </main>

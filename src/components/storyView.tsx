@@ -3,9 +3,22 @@
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 
+interface UserType {
+    id: number;
+    username: string;
+    photo: string;
+    stories: [];
+}
+
+interface StoryType {
+    id: number;
+    image: string;
+    duration: number;
+}
+
 export default function StoryView({ userId, onClose }: { userId: string | number, onClose: () => void }) {
-    const [userStories, setUserStories] = useState<any>([]);
-    const [user, setUser] = useState<any>(null);
+    const [userStories, setUserStories] = useState<StoryType[]>([]);
+    const [user, setUser] = useState<UserType | null>(null);
     const [storyId, setStoryId] = useState<number>(1);
     const [duration, setDuration] = useState<number>(0);
     const [isViewing, setIsViewing] = useState<boolean>(false);
@@ -33,7 +46,8 @@ export default function StoryView({ userId, onClose }: { userId: string | number
                 setDuration(duration + 1);
 
                 if (userStories.length > 0) {
-                    if (duration >= userStories.find((s: { id: number; }) => s.id === storyId).duration) {
+                    const currentStory = userStories.find((s: { id: number; }) => s.id === storyId);
+                    if (currentStory && duration >= currentStory.duration) {
                         if (storyId + 1 <= userStories.length) {
                             setStoryId(storyId + 1);
                             setDuration(0);
@@ -81,7 +95,7 @@ export default function StoryView({ userId, onClose }: { userId: string | number
                 <div className="absolute inset-0 flex justify-center items-center">
                     {userStories.length > 0 &&
                         <div className="relative w-screen h-screen">
-                            <img src={userStories.find((s: { id: number; }) => s.id === storyId).image} className="absolute w-full h-full object-cover -z-10" />
+                            <img src={userStories.find((s: { id: number; }) => s.id === storyId)?.image || ''} className="absolute w-full h-full object-cover -z-10" />
                             <div className="absolute top-0 w-full px-2">
                                 <div className="flex flex-column gap-2">
                                     {userStories.map((story: { id: number; duration: number }) => (
@@ -97,7 +111,7 @@ export default function StoryView({ userId, onClose }: { userId: string | number
                             <div className="flex justify-between items-center gap-5 p-3 pt-5 z-20">
                                 <div className="flex items-center gap-2 z-20">
                                     <button className="bg-gray-300 p-0.5 rounded-full w-10 h-10">
-                                        <img src={user && user.photo} alt={user && user.username} className="rounded-full" />
+                                        <img src={user?.photo || undefined} alt={user?.username || undefined} className="rounded-full" />
                                     </button>
                                     <span className="font-bold">{user && user.username}</span>
                                 </div>

@@ -18,12 +18,12 @@ interface postType {
         id: number,
         username: string,
         photo: string,
-        stories: [index: number]
+        stories: []
     };
-    stories: [index: number];
+    stories: [];
 }
 
-export default function PostCard({ post, onStoryClick, isLiked = false, likeHandler }: { post: postType; onStoryClick: (userId: string | number) => void; isLiked?: boolean; likeHandler: (postId: string | number, isLiked?: boolean) => void }) {
+export default function PostCard({ post, onStoryClick, isLiked = false, likeHandler }: { post: postType; onStoryClick: (userId: string | number) => void; isLiked?: boolean; likeHandler: (postId: number, isLiked?: boolean) => void }) {
     const [showHeart, setShowHeart] = useState(false);
 
     const handleDoubleClick = debounce(() => {
