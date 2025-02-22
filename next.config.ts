@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   env: {
-    HOST_URL: "localhost:3000"
+    HOST_URL: "https://instabram.vercel.app"
   },
   images: {
     dangerouslyAllowSVG: true,
