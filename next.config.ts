@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  env: {
+    HOST_URL: "localhost:3000"
+  },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
