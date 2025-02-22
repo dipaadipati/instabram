@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
+import './envConfig.ts'
 
 const nextConfig: NextConfig = {
   env: {
-    HOST_URL: "https://instabram.vercel.app"
+    HOST_URL: process.env.HOST_URL
   },
   images: {
     dangerouslyAllowSVG: true,

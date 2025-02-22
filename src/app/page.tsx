@@ -53,7 +53,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, [postLikes]);
+  }, []);
 
 
   const likeHandler = debounce((postId: number, isLiked?: boolean) => {
