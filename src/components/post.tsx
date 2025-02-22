@@ -5,11 +5,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faMessage as faMessageRegular } from "@fortawesome/free-regular-svg-icons";
-import { faMessage as faMessageSolid } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { debounce } from 'lodash';
 
-export default function PostCard({ post, onStoryClick, isLiked = false, likeHandler }: { post: any; onStoryClick: (userId: string) => void; isLiked?: boolean; likeHandler: (postId: string, isLiked?: boolean) => void }) {
+interface postType {
+    id: number;
+    caption: string;
+    image: string;
+    likes: number;
+    comments: number;
+    user: {
+        id: number,
+        username: string,
+        photo: string,
+        stories: [index: number]
+    };
+    stories: [index: number];
+}
+
+export default function PostCard({ post, onStoryClick, isLiked = false, likeHandler }: { post: postType; onStoryClick: (userId: string | number) => void; isLiked?: boolean; likeHandler: (postId: string | number, isLiked?: boolean) => void }) {
     const [showHeart, setShowHeart] = useState(false);
 
     const handleDoubleClick = debounce(() => {

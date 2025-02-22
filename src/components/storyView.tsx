@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 
-export default function StoryView({ userId, onClose }: { userId: string, onClose: () => void }) {
+export default function StoryView({ userId, onClose }: { userId: string | number, onClose: () => void }) {
     const [userStories, setUserStories] = useState<any>([]);
     const [user, setUser] = useState<any>(null);
     const [storyId, setStoryId] = useState<number>(1);

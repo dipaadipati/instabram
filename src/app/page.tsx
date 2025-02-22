@@ -13,7 +13,7 @@ import { debounce } from 'lodash';
 
 export default function Home() {
   const [userStoriesData, setUserStoriesData] = useState<any | null>(null);
-  const [storyUserId, setStoryUserId] = useState<string | null>(null);
+  const [storyUserId, setStoryUserId] = useState<string | number | null>(null);
   const [userPostsData, setUserPostsData] = useState<any | null>(null);
   const [postLikes, setPostLikes] = useState<any[] | null>([]);
 
@@ -25,7 +25,7 @@ export default function Home() {
 
       const posts = await fetch("http://localhost:3000/api/posts");
       const postsData = await posts.json();
-      let likes: any = [];
+      const likes: any = [];
       postsData.forEach((post: { id: never; }) => {
         likes[post.id] = postLikes ? postLikes[post.id] : false;
       });
