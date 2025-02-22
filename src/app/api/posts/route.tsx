@@ -1,3 +1,5 @@
+import '../../../../envConfig.ts'
+
 interface postType {
     id: number;
     user_id: number;

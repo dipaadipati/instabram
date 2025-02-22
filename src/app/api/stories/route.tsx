@@ -1,3 +1,5 @@
+import '../../../../envConfig.ts'
+
 interface userType {
     stories: [index: number];
 }
