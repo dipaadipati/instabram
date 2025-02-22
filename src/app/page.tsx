@@ -3,9 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
-import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faMessage as faMessageRegular } from "@fortawesome/free-regular-svg-icons";
-import { faMessage as faMessageSolid } from "@fortawesome/free-solid-svg-icons";
 import Footer from "@/components/footer"
 import Link from "next/link";
 import Image from "next/image";
