@@ -28,7 +28,7 @@ export default function StoryView({ userId, onClose }: { userId: string | number
         setUser(null);
         setUserStories([]);
         const fetchUserStories = async () => {
-            const userWithStories = await fetch(`http://localhost:3000/api/stories/${userId}`);
+            const userWithStories = await fetch(`./api/stories/${userId}`);
             const userStoriesData = await userWithStories.json();
 
             setUserStories(userStoriesData.stories);

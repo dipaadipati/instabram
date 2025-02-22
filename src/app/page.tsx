@@ -38,11 +38,11 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userWithStories = await fetch("http://localhost:3000/api/stories");
+      const userWithStories = await fetch("./api/stories");
       const data = await userWithStories.json();
       setUserStoriesData(data);
 
-      const posts = await fetch("http://localhost:3000/api/posts");
+      const posts = await fetch("./api/posts");
       const postsData = await posts.json();
       const likes: boolean[] = [];
       postsData.forEach((post: { id: never; }) => {
